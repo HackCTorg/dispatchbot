@@ -7,7 +7,7 @@ export interface NotificationItem {
   scheduledTime?: Date;
   retryCount: number;
   maxRetries: number;
-  status: 'pending' | 'processing' | 'sent' | 'failed' | 'cancelled';
+  status: 'pending' | 'processing' | 'sent' | 'failed' | 'canceled';
   metadata: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;
@@ -166,7 +166,7 @@ export class NotificationQueue {
       'dropoff_complete': 'You have arrived at your destination. Thank you for using our service!',
       'roundtrip_returning': 'Your return trip has begun. You\'re heading back to your pickup location.',
       'roundtrip_complete': 'Your roundtrip has been completed. Thank you for using our service!',
-      'cancelled': 'Your ride has been cancelled. Please request a new ride if needed.',
+      'canceled': 'Your ride has been canceled. Please request a new ride if needed.',
       'interrupted': 'Your ride has been interrupted. We\'ll contact you shortly with updates.'
     };
 
@@ -301,7 +301,7 @@ export class NotificationQueue {
         { id },
         { 
           $set: { 
-            status: 'cancelled',
+            status: 'canceled',
             updatedAt: new Date()
           }
         }
@@ -323,7 +323,7 @@ export class NotificationQueue {
         },
         { 
           $set: { 
-            status: 'cancelled',
+            status: 'canceled',
             updatedAt: new Date()
           }
         }
@@ -379,7 +379,7 @@ export class NotificationQueue {
     sent: number;
     failed: number;
     pending: number;
-    cancelled: number;
+    canceled: number;
   }> {
     try {
       const collection = this.db.collection('notificationQueue');
@@ -401,7 +401,7 @@ export class NotificationQueue {
         sent: 0,
         failed: 0,
         pending: 0,
-        cancelled: 0
+        canceled: 0
       };
 
       results.forEach((result: any) => {
@@ -412,7 +412,7 @@ export class NotificationQueue {
       return stats;
     } catch (error) {
       console.error('Error getting ride notification stats:', error);
-      return { total: 0, sent: 0, failed: 0, pending: 0, cancelled: 0 };
+      return { total: 0, sent: 0, failed: 0, pending: 0, canceled: 0 };
     }
   }
 

@@ -95,13 +95,13 @@ export class MessageTemplateManager {
       updatedAt: new Date()
     });
 
-    this.defaultTemplates.set('en_ride_cancelled', {
-      id: 'en_ride_cancelled',
-      name: 'Ride Cancelled',
-      description: 'Sent when a ride is cancelled',
+    this.defaultTemplates.set('en_ride_canceled', {
+      id: 'en_ride_canceled',
+      name: 'Ride Canceled',
+      description: 'Sent when a ride is canceled',
       category: 'ride-updates',
       language: 'en',
-      template: 'Your ride scheduled for {pickupTime} has been cancelled. Please request a new ride if needed.',
+      template: 'Your ride scheduled for {pickupTime} has been canceled. Please request a new ride if needed.',
       variables: ['pickupTime'],
       isActive: true,
       createdAt: new Date(),

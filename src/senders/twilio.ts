@@ -53,8 +53,8 @@ export class TwilioSender {
       'Your ride has been completed. Thank you for using our service! Please rate your experience.'
     );
     
-    this.messageTemplates.set('rideCancelled', 
-      'Your ride scheduled for {pickupTime} has been cancelled. Please request a new ride if needed.'
+    this.messageTemplates.set('rideCanceled', 
+      'Your ride scheduled for {pickupTime} has been canceled. Please request a new ride if needed.'
     );
     
     this.messageTemplates.set('delayNotification', 

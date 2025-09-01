@@ -376,8 +376,8 @@ export class DispatchBot {
         case 100: // Ride Confirmed
           await this.rideEventManager.requestConfirmed(rideRequest.uuid, rideRequest.serviceUserUuid);
           break;
-        case 109: // Ride Canceled by Ride
-          await this.rideEventManager.requestCanceled(rideRequest.uuid, rideRequest.serviceUserUuid, 'Cancelled automatically');
+        case 109: // Ride Canceled by Rider
+          await this.rideEventManager.requestCanceled(rideRequest.uuid, rideRequest.serviceUserUuid, 'Canceled automatically');
           break;
         case 200: // Ride Started
           await this.rideEventManager.rideStarted(
@@ -685,7 +685,7 @@ export class DispatchBot {
       await this.notificationQueue.addStatusUpdateNotification(
         event.serviceUserUuid,
         event.rideRequestUuid.toString(),
-        'cancelled',
+        'canceled',
         event.metadata['reason']
       );
     });

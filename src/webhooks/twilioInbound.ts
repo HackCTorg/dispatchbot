@@ -297,9 +297,9 @@ Need more help? Contact our support team.`;
         { _id: activeRide._id },
         { 
           $set: { 
-            status: 'cancelled',
-            cancelledAt: new Date(),
-            cancelledBy: 'user_sms'
+            status: 'canceled',
+            canceledAt: new Date(),
+            canceledBy: 'user_sms'
           }
         }
       );
@@ -309,14 +309,14 @@ Need more help? Contact our support team.`;
         await this.notificationQueue.addRideUpdateNotification(
           activeRide.providerId,
           activeRide.id,
-          'Ride has been cancelled by the passenger.',
+          'Ride has been canceled by the passenger.',
           'high'
         );
       }
 
-      return 'Your ride has been cancelled successfully.';
+      return 'Your ride has been canceled successfully.';
     } catch (error) {
-      console.error('Error handling cancellation request:', error);
+      console.error('Error handling cancelation request:', error);
       return 'Sorry, I couldn\'t cancel your ride. Please try again or contact support.';
     }
   }
