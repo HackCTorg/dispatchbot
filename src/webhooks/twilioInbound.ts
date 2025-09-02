@@ -189,7 +189,7 @@ export class TwilioInboundHandler {
   private async isRideUpdateResponse(fromNumber: string): Promise<boolean> {
     try {
       // Check if user has any active rides
-      const collection = this.db.collection('rideRequests');
+      const collection = this.db.collection('ride-requests');
       const activeRide = await collection.findOne({
         userId: fromNumber,
         status: { $in: ['assigned', 'accepted', 'in-progress'] }
@@ -251,7 +251,7 @@ Need more help? Contact our support team.`;
 
   private async getRideStatus(fromNumber: string): Promise<string> {
     try {
-      const collection = this.db.collection('rideRequests');
+      const collection = this.db.collection('ride-requests');
       const activeRide = await collection.findOne({
         userId: fromNumber,
         status: { $in: ['pending', 'assigned', 'accepted', 'in-progress'] }
@@ -282,7 +282,7 @@ Need more help? Contact our support team.`;
 
   private async handleCancellationRequest(fromNumber: string): Promise<string> {
     try {
-      const collection = this.db.collection('rideRequests');
+      const collection = this.db.collection('ride-requests');
       const activeRide = await collection.findOne({
         userId: fromNumber,
         status: { $in: ['pending', 'assigned', 'accepted'] }

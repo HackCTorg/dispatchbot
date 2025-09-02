@@ -121,25 +121,26 @@ export class DispatchBot {
       console.log('Setting up automatic database change detection...');
       
       const db = this.db.db();
-      const riderequestsCollection = db.collection('riderequests');
+      const riderequestsCollection = db.collection('ride-requests');
       const usersCollection = db.collection('users');
-      const serviceprovidersCollection = db.collection('serviceproviders');
+      const serviceprovidersCollection = db.collection('service-providers');
+      // const vehiclesCollection = db.collection('vehicles');
 
-      // Watch for ride status changes (actual ride progress)
-      this.watchRideRequestChanges(riderequestsCollection);
-      
-      // Watch for ride request status changes (workflow status)
-      this.watchRideRequestStatusChanges(riderequestsCollection);
-      
       // Watch for new ride requests
       this.watchNewRideRequests(riderequestsCollection);
-      
-      // Watch for driver/vehicle assignments
-      this.watchAssignmentChanges(riderequestsCollection);
       
       // Watch for user and provider changes
       this.watchUserChanges(usersCollection);
       this.watchProviderChanges(serviceprovidersCollection);
+
+      // Watch for driver/vehicle assignments
+      this.watchAssignmentChanges(riderequestsCollection);
+      
+      // Watch for ride request status changes (workflow status)
+      this.watchRideRequestStatusChanges(riderequestsCollection);
+      
+      // Watch for ride status changes (actual ride progress)
+      this.watchRideStatusChanges(riderequestsCollection);
 
       console.log('✅ Automatic database change detection active');
     } catch (error) {
@@ -149,7 +150,7 @@ export class DispatchBot {
   }
 
   // Watch for ride status changes (actual ride progress: 0-509)
-  private watchRideRequestChanges(collection: any) {
+  private watchRideStatusChanges(collection: any) {
     try {
       const changeStream = collection.watch([
         { 
@@ -734,7 +735,7 @@ export class DispatchBot {
       console.log('Checking for ride delays...');
       
       // Query for rides that should have started but haven't - using your exact collection name
-      const collection = this.db.db().collection('riderequests');
+      const collection = this.db.db().collection('ride-requests');
       const delayedRides = await collection.find({
         rideStatus: 100, // Ride Confirmed (0-509 range)
         pickupRequestedTime: { $lte: new Date().toISOString() },
@@ -762,7 +763,7 @@ export class DispatchBot {
     try {
       console.log('Sending pickup reminders...');
       
-      const collection = this.db.db().collection('riderequests');
+      const collection = this.db.db().collection('ride-requests');
       const now = new Date();
       const reminderTime = new Date(now.getTime() + 15 * 60 * 1000); // 15 minutes from now
       

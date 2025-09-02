@@ -185,10 +185,10 @@ export class UserPrefsManager {
     }
   }
 
-  // Service Provider Management - Uses your exact collection name 'serviceproviders'
+  // Service Provider Management - Uses your exact collection name 'service-providers'
   async getServiceProvider(uuid: number): Promise<ServiceProvider | null> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       return await collection.findOne({ uuid });
     } catch (error) {
       console.error('Error fetching service provider:', error);
@@ -198,7 +198,7 @@ export class UserPrefsManager {
 
   async createServiceProvider(providerData: Omit<ServiceProvider, 'createdAt' | 'updatedAt'>): Promise<boolean> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       const newProvider: ServiceProvider = {
         ...providerData,
         createdAt: new Date(),
@@ -215,7 +215,7 @@ export class UserPrefsManager {
 
   async updateServiceProvider(uuid: number, updates: Partial<ServiceProvider>): Promise<boolean> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       const result = await collection.updateOne(
         { uuid },
         { 
@@ -231,10 +231,10 @@ export class UserPrefsManager {
     }
   }
 
-  // Ride Request Management - Uses your exact collection name 'riderequests'
+  // Ride Request Management - Uses your exact collection name 'ride-requests'
   async getRideRequest(uuid: number): Promise<RideRequest | null> {
     try {
-      const collection = this.db.collection('riderequests');
+      const collection = this.db.collection('ride-requests');
       return await collection.findOne({ uuid });
     } catch (error) {
       console.error('Error fetching ride request:', error);
@@ -244,7 +244,7 @@ export class UserPrefsManager {
 
   async updateRideRequest(uuid: number, updates: Partial<RideRequest>): Promise<boolean> {
     try {
-      const collection = this.db.collection('riderequests');
+      const collection = this.db.collection('ride-requests');
       const result = await collection.updateOne(
         { uuid },
         { 
@@ -264,7 +264,7 @@ export class UserPrefsManager {
   // Get all drivers (Service Providers with Driver role)
   async getAvailableDrivers(): Promise<ServiceProvider[]> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       return await collection.find({ 
         role: 'Driver',
         'availability.isAvailable': true
@@ -278,7 +278,7 @@ export class UserPrefsManager {
   // Get all fleet managers
   async getFleetManagers(): Promise<ServiceProvider[]> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       return await collection.find({ role: 'Fleet Manager' }).toArray();
     } catch (error) {
       console.error('Error fetching fleet managers:', error);
@@ -289,7 +289,7 @@ export class UserPrefsManager {
   // Get all transport brokers
   async getTransportBrokers(): Promise<ServiceProvider[]> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       return await collection.find({ role: 'Transport Broker' }).toArray();
     } catch (error) {
       console.error('Error fetching transport brokers:', error);
@@ -516,7 +516,7 @@ export class UserPrefsManager {
   // Get providers by role
   async getProvidersByRole(role: string): Promise<ServiceProvider[]> {
     try {
-      const collection = this.db.collection('serviceproviders');
+      const collection = this.db.collection('service-providers');
       return await collection.find({ role }).toArray();
     } catch (error) {
       console.error('Error fetching providers by role:', error);
@@ -527,7 +527,7 @@ export class UserPrefsManager {
   // Get all active ride requests
   async getActiveRideRequests(): Promise<RideRequest[]> {
     try {
-      const collection = this.db.collection('riderequests');
+      const collection = this.db.collection('ride-requests');
       // Get rides that are not in closing statuses
       return await collection.find({
         rideStatus: { 
@@ -543,7 +543,7 @@ export class UserPrefsManager {
   // Get ride requests by status
   async getRideRequestsByStatus(status: number): Promise<RideRequest[]> {
     try {
-      const collection = this.db.collection('riderequests');
+      const collection = this.db.collection('ride-requests');
       return await collection.find({ rideStatus: status }).toArray();
     } catch (error) {
       console.error('Error fetching ride requests by status:', error);
